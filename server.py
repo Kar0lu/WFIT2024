@@ -23,11 +23,11 @@ def data():
                     acc_data.append({"time": (d["time"] * 1e-9) - (acc_data[0]["time"]), "x": d["values"]["x"], "y": d["values"]["y"], "z": d["values"]["z"]})
                 else:
                     acc_data.append({"time": d["time"] * 1e-9, "x": d["values"]["x"], "y": d["values"]["y"], "z": d["values"]["z"]})
-            if d.get("name") == "gyroscope":
+            if d.get("name") == "orientation":
                 if(len(gyr_data)):
-                    gyr_data.append({"time": (d["time"] * 1e-9) - (gyr_data[0]["time"]), "x": d["values"]["x"], "y": d["values"]["y"], "z": d["values"]["z"]})
+                    gyr_data.append({"time": (d["time"] * 1e-9) - (gyr_data[0]["time"]), "qx": d["values"]["qx"], "qy": d["values"]["qy"], "qz": d["values"]["qz"], "qw": d["values"]["qw"]})
                 else:
-                    gyr_data.append({"time": d["time"] * 1e-9, "x": d["values"]["x"], "y": d["values"]["y"], "z": d["values"]["z"]})
+                    gyr_data.append({"time": d["time"] * 1e-9, "qx": d["values"]["qx"], "qy": d["values"]["qy"], "qz": d["values"]["qz"], "qw": d["values"]["qw"]})
         return jsonify({"status": "success"}), 200
     else:
         return jsonify({"status": "method not allowed"}), 405
@@ -44,7 +44,7 @@ def get():
         acc_data.clear()
         gyr_data.clear()
         return jsonify({"status": "success"}), 200
-
+'''
 @app.route('/plot', methods=["GET"])
 def plot():
     if request.method == "GET":
@@ -169,6 +169,7 @@ def plot_trajectory(position):
     ax.legend()
     
     plt.savefig('trajectory.png')
+'''
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000, host="192.168.1.21")
+    app.run(debug=True, port=5000, host="0.0.0.0")
