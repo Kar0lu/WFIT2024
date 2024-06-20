@@ -33,5 +33,4 @@ package-lock.json
 package.json
 
 *.png
-*.json
 test.py
