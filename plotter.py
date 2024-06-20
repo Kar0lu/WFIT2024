@@ -9,7 +9,7 @@ with open('resource/kolo/acc.json', 'r') as file:
 with open('resource/kolo/gyr.json', 'r') as file:
     gyr_data = json.load(file)
 acc_array = np.array([[d["x"], d["y"], d["z"]] for d in acc_data])
-gyr_array = np.array([[d["qx"], d["qy"], d["qz"], d["qw"]] for d in gyr_data])
+gyr_array = np.array([[d["qw"], d["qx"], d["qy"], d["qz"]] for d in gyr_data])
 
 # Sample number equalisation
 if not  len(acc_array) == len(gyr_array):
