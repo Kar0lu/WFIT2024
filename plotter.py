@@ -1,12 +1,12 @@
 import json
 import numpy as np
-from ahrs.common.orientation import q_prod, q_conj, acc2q, am2q, q2R, q_rot
+from ahrs.common.orientation import q_conj, q_rot
 import matplotlib.pyplot as plt
 
 #otwarcie zapisanej w JSON-ie trasy
-with open('acc.json', 'r') as file:
+with open('resource/kolo/acc.json', 'r') as file:
     acc_data = json.load(file)
-with open('gyr.json', 'r') as file:
+with open('resource/kolo/gyr.json', 'r') as file:
     gyr_data = json.load(file)
 #ahrs = imufusion.Ahrs() #przydatne rzeczy
 acc_array = np.array([[d["x"], d["y"], d["z"]] for d in acc_data])
@@ -20,7 +20,6 @@ if not  len(acc_array) == len(gyr_array):
         dl = len(gyr_array) - len(acc_array)
         gyr_array = gyr_array[0:len(gyr_array) - dl]
 dt = (acc_data[-1]["time"] / len(acc_data))
-#print(dt)
 acc = []
 for i in range(len(acc_array)):
     acc.append(q_rot(q_conj(gyr_array[i]), acc_array[i]))
@@ -37,7 +36,8 @@ for i in range(len(vel)):
     if (i == 0):
         pos.append([acc[i][0]*dt*dt*0.5, acc[i][1]*dt*dt*0.5, acc[i][2]*dt*dt*0.5])
     else:
-        pos.append([pos[i-1][0] + vel[i-1][0]*dt + acc[i][0]*dt*dt*0.5, pos[i-1][1] + vel[i][1]*dt + acc[i][1]*dt*dt*0.5, pos[i-1][2] + vel[i][2]*dt + acc[i][2]*dt*dt*0.5])
+        pos.append([pos[i-1][0] + vel[i-1][0]*dt + acc[i-1][0]*dt*dt*0.5, pos[i-1][1] + vel[i-1][1]*dt +
+                    acc[i-1][1]*dt*dt*0.5, pos[i-1][2] + vel[i-1][2]*dt + acc[i-1][2]*dt*dt*0.5])
 pos = np.array(pos)
 
 fig = plt.figure()

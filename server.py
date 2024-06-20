@@ -37,9 +37,9 @@ def get():
     acc_data[0]["time"] = 0
     gyr_data[0]["time"] = 0
     if request.method == "GET":
-        with open('acc.json', 'w') as file:
+        with open('resource/acc.json', 'w') as file:
             json.dump(acc_data, file, indent=4)
-        with open('gyr.json', 'w') as file:
+        with open('resource/gyr.json', 'w') as file:
             json.dump(gyr_data, file, indent=4)
         acc_data.clear()
         gyr_data.clear()
