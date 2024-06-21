@@ -1,15 +1,6 @@
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify
 import json
-import numpy as np
-import matplotlib.pyplot as plt
-
-import ahrs.filters
-from ahrs.common.orientation import q_prod, q_conj, acc2q, am2q, q2R, q_rot
-
-from mpl_toolkits.mplot3d import Axes3D
-
 app = Flask(__name__)
-
 acc_data = []
 gyr_data = []
 
